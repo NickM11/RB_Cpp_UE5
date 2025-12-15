@@ -2,19 +2,61 @@
 //
 
 #include <iostream>
+#include <string>
+#include <algorithm>
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    std::string name;
+    std::int16_t age;
+    std::string xenos;
+    std::string PlayerClass;
+    bool HasChosenClass = false;
+    float health;
+    bool HasHealthSet = false;
+
+    std::cout << "I need your Name traveler" << "\n";
+    std::cin >> name;
+    std::cout << "Now tell me your age traveler " << name << "\n";
+    std::cin >> age;
+    std::cout << "Hmm at your age of " << age << ". You took great care of yourself." << "\n";
+    std::cout << "Be Proud traveler " << name << " !" << " And tell me what Xenos do you represent"<<"\n";
+    std::cin >> xenos;
+    std::cout << "You are from mighty " << xenos << " people,then tell me " << name << ". What type of warrior you are!" << "\n";
+    
+    
+    while (HasChosenClass != true) {
+        std::cout << "(chose only from mage , archer or barbar)" << "\n";
+        std::cin >> PlayerClass;
+        std::transform(PlayerClass.begin(), PlayerClass.end(), PlayerClass.begin(), ::tolower);
+
+        if (PlayerClass == "mage" || PlayerClass == "archer" ||PlayerClass == "barbar") {
+            std::cout << " So you are mighty " << PlayerClass << "\n";
+            HasChosenClass = true;
+        }
+        else
+        {
+            std::cout << "Hmm, I do not percieve the knowlodge of this class chose another one" << "\n";
+            continue;
+        }
+    }
+
+    while (HasHealthSet != true) {
+        std::cout << "And at last tell me how is your health in you ripe age of " << age << "?" << "\n";
+        std::cin >> health;
+        if (health <= 100.0 || health >=1) {
+            std::cout << "So you have " << health << " health" << "\n";
+            HasHealthSet = true;
+        }
+        else {
+            std::cout << "You have more health do not lie to me" << "\n";
+            continue;
+        }
+    }
+
+    std::cout << "Welcome to Agartha o mighty " << xenos << " " << name << " with your ripe health of " << health << " and skills of " << PlayerClass << "\n";
+    std::cout << "After long " << age << " years of searching" << "\n";
+    std::cout << "You reached us and we Welcome you to the Land Down Under. " << "\n";
+
+  
 }
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
