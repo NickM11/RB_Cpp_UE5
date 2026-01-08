@@ -4,22 +4,38 @@
 #include <limits>
 #include <vector>
 #include <algorithm>
+#include <sstream>
 
+int readInt() {
+	std::string input;
+	int value;
+
+	while (true) {
+		std::getline(std::cin, input);
+		std::stringstream ss(input);
+
+		if (ss >> value && ss.eof()) {
+			return value; // valid int
+		}
+
+		std::cout << "Invalid integer. Try again: ";
+	}
+}
 
 int GetPlayerCount() {
 	int playerCount;
 	std::cout << "How big is your party?" << std::endl;
-	std::cin >> playerCount;
+	playerCount = readInt();
 	return playerCount;
 }
 
-std::map<std::string, int> CreateParty(int playerCount) {
+std::map<std::string, int> CreateParty(int& playerCount) {
 	std::map<std::string, int> party;
 	for (int i = 1; i <= playerCount; i++) {
 		int health;
 		std::string name;
 		std::cout << "Enter Health for Player " << std::to_string(i) << std::endl;
-		std::cin >> health;
+		health = readInt();
 		std::cout << "Enter Name for Player " << std::to_string(i) << std::endl;
 		std::cin >> name;
 		party.insert({name,health});
@@ -28,13 +44,13 @@ std::map<std::string, int> CreateParty(int playerCount) {
 	return party;
 }
 
-void PrintParty(const std::map<std::string, int> party) {
+void PrintParty(const std::map<std::string, int>& party) {
 	for (auto& p : party) {
 		std::cout << p.first << ":" << p.second << std::endl;
 	}
 }
 
-void GetMaxHealth(std::map<std::string, int> party) {
+void GetMaxHealth(std::map<std::string, int>& party) {
 	std::vector<std::string> maxPlayers;
 	int maxVal = std::numeric_limits<int>::min();
 
@@ -55,7 +71,7 @@ void GetMaxHealth(std::map<std::string, int> party) {
 	}
 }
 
-void GetMinHealth(const std::map<std::string, int> party) {
+void GetMinHealth(const std::map<std::string, int>& party) {
 	int minVal = std::numeric_limits<int>::max();
 	std::vector<std::string> minPlayers;
 
@@ -76,7 +92,7 @@ void GetMinHealth(const std::map<std::string, int> party) {
 	}
 }
 
-std::map<std::string, int> doDamage(int damage, std::map<std::string, int> party) {
+std::map<std::string, int> doDamage(int damage, std::map<std::string, int>& party) {
 	for (auto& pdamage : party) {
 		pdamage.second = std::clamp(pdamage.second - damage,0,INT_MAX);
 	}
@@ -84,7 +100,7 @@ std::map<std::string, int> doDamage(int damage, std::map<std::string, int> party
 	return party;
 }
 
-void CheckDeath(std::map<std::string, int> party) {
+void CheckDeath(std::map<std::string, int>& party) {
 	std::vector <std::string> dead;
 	for (const auto& p : party) {
 		if (p.second <= 0) {
@@ -103,7 +119,7 @@ int main() {
 	std::map<std::string, int> party = CreateParty(playerCount);
 	PrintParty(party);
 	std::cout << "How much damage party recieves" << std::endl;
-	std::cin >> damage;
+	damage = readInt();
 	party = doDamage(damage, party);
 
 	while (exit != true)
