@@ -5,6 +5,7 @@ class Character
 {
 private:
 	int health = 0;
+	bool hasWeapon = false;
 	struct Attributes
 	{
 		int dexterity = 0;
@@ -88,7 +89,9 @@ private:
 	Weapon weapon;
 
 public:
-
+	void setHasWeapon(bool Hasweapon) {
+		hasWeapon = Hasweapon;
+	}
 
 	void setVariables(int setHealth) {
 		health = setHealth;
@@ -132,11 +135,37 @@ public:
 };
 
 int main() {
+	bool exit = false;
 	Character character;
+	std::string input = "";
 	character.setVariables(100);
 	character.setAttributes(10,11,12);
 	character.IntializePassiveItem(64,".png",10,10,10);
-	character.InitializeWeapon(64, ".png", 10, 10);
+	while (exit != true) {
+		int randomNum = rand() % 101;
+		if (randomNum <= 25) {
+			std::cout << "You found weapon!" << std::endl;
+			std::cout << "1 - Pick up or 2 - drop previous" << std::endl;
+			std::cout << "or Exit" << std::endl;
+			std::cin >> input;
+			if (input == "1") {
+				character.InitializeWeapon(64, ".png", rand() % 20, rand() % 10);
+				std::cout << "You picked up new weapon!" << std::endl;
+			}
+			else if (input == "2") {
+				character.InitializeWeapon(64, ".png",0, 0);
+				std::cout << "You dropped your weapon!" << std::endl;
+			}
+			else if (input == "Exit") {
+				exit = true;
+				std::cout << "Exited" << std::endl;
+			}
+			else
+			{
+				std::cout << "Ingnoring the item.Continues to walk" << std::endl;
+			}
+		}
+	}
 
 	character.getAttributes();
 	character.GetWeaponInfo();
