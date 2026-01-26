@@ -1,14 +1,11 @@
 #include <iostream>
 #include <string>
-#include <memory>
-
 
 class Character
 {
 private:
 	int health = 0;
 	bool hasWeapon = false;
-	int speed = 0;
 	struct Attributes
 	{
 		int dexterity = 0;
@@ -18,28 +15,10 @@ private:
 
 	Attributes attributes;
 
-	class SpeedMod {
-	private:
-		std::shared_ptr<int> speedMod;
-
-	public:
-		SpeedMod()
-			: speedMod(std::make_shared<int>(0)) {
-		}
-
-		void setSpeedMod(int speed) {
-			*speedMod = speed;
-		}
-
-		int getSpeedMod() const {
-			return *speedMod;
-		}
-	};
-
 	class Weapon
 	{
 	public:
-		void setVariables(int dmg,int cld) {
+		void setVariables(int dmg, int cld) {
 			damage = dmg;
 			cooldown = cld;
 		}
@@ -61,7 +40,7 @@ private:
 		struct Icon
 		{
 			int size = 0;
-			std::string type ="";
+			std::string type = "";
 		};
 		Icon weaponIcon;
 	};
@@ -69,17 +48,17 @@ private:
 	class PassiveItem
 	{
 	public:
-		void setIcon(int setSize,std::string setType) {
+		void setIcon(int setSize, std::string setType) {
 			icon.size = setSize;
 			icon.type = setType;
 		}
 
-		void setModedAttributes(int dex,int agi,int wis){
+		void setModedAttributes(int dex, int agi, int wis) {
 			modedAttributes.agility = agi;
 			modedAttributes.dexterity = dex;
 			modedAttributes.wisdom = wis;
 		}
-		int getDexterity(){
+		int getDexterity() {
 			return modedAttributes.dexterity;
 		}
 		int getAgility() {
@@ -118,24 +97,24 @@ public:
 		health = setHealth;
 	}
 
-	void setAttributes(int dex,int agi,int wis) {
+	void setAttributes(int dex, int agi, int wis) {
 		attributes.dexterity = dex;
 		attributes.agility = agi;
 		attributes.wisdom = wis;
 	}
 
-	void InitializeWeapon(int iconsize, std::string icontype,int wpnDmg,int wpnCld) {
-		weapon.setVariables(wpnDmg,wpnCld);
-		weapon.setIcon(iconsize,icontype);
+	void InitializeWeapon(int iconsize, std::string icontype, int wpnDmg, int wpnCld) {
+		weapon.setVariables(wpnDmg, wpnCld);
+		weapon.setIcon(iconsize, icontype);
 	}
-	void IntializePassiveItem(int iconsize, std::string icontype,int modDex,int modAgi,int modWis) {
-		passiveItem.setIcon(iconsize,icontype);
-		passiveItem.setModedAttributes(modDex,modAgi,modWis);
+	void IntializePassiveItem(int iconsize, std::string icontype, int modDex, int modAgi, int modWis) {
+		passiveItem.setIcon(iconsize, icontype);
+		passiveItem.setModedAttributes(modDex, modAgi, modWis);
 	}
 	void GetWeaponInfo() {
 		weapon.getWeaponInfo();
 	}
-	
+
 	void getAttributes() {
 		attributes.dexterity += passiveItem.getDexterity();
 		attributes.agility += passiveItem.getAgility();
@@ -160,8 +139,8 @@ int main() {
 	Character character;
 	std::string input = "";
 	character.setVariables(100);
-	character.setAttributes(10,11,12);
-	character.IntializePassiveItem(64,".png",10,10,10);
+	character.setAttributes(10, 11, 12);
+	character.IntializePassiveItem(64, ".png", 10, 10, 10);
 	while (exit != true) {
 		int randomNum = rand() % 101;
 		if (randomNum <= 25) {
@@ -174,7 +153,7 @@ int main() {
 				std::cout << "You picked up new weapon!" << std::endl;
 			}
 			else if (input == "2") {
-				character.InitializeWeapon(64, ".png",0, 0);
+				character.InitializeWeapon(64, ".png", 0, 0);
 				std::cout << "You dropped your weapon!" << std::endl;
 			}
 			else if (input == "Exit") {
